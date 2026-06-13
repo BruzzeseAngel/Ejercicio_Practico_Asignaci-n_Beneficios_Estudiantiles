@@ -55,17 +55,17 @@ const costoTotalArancel = catalogoCarreras.reduce((total, carrera) => {
 },0);
 
 //EXTRACCION POR DESESTRUCTURACION, con este quede loco no se como explicarlo pero es como hacer las cosas al reves. En este caso pienso que es declarar el objeto creado desde sus propiedades.
-const { nombre1, porcentajeRSH1} = postulante1;
+const { nombre: nombrePostulante1} = postulante1;
 
 //SALIDA AL USUARIO. Decidí usar un if else para separar el beneficio de gratuidad con los demás ya que cambian la totalidad de las carreras a optar.
 if(postulante1.evaluarBeneficio() === "Gratuidad"){
     window.alert(`
-Buenas noches estimado ${nombre1}, el beneficio al cual usted puede optar es ${postulante1.evaluarBeneficio()}.
+Buenas noches estimado ${nombrePostulante1}, el beneficio al cual usted puede optar es ${postulante1.evaluarBeneficio()}.
 Las carreras a las que puede ingresar con este beneficio son: ${nombreCarrerasGratuidad}.
 `)
 } else {
     window.alert(`
-Buenas noches estimado ${nombre1}, el beneficio al cual usted puede optar es ${postulante1.evaluarBeneficio()}.
+Buenas noches estimado ${nombrePostulante1}, el beneficio al cual usted puede optar es ${postulante1.evaluarBeneficio()}.
 Las carreras a las que puede ingresar son: ${nombreCarreras}.
 `);
 }
