@@ -11,7 +11,7 @@ class Postulante {
         // Se evalua el porcentaje (propiedad privada) y devuelve un string con el estado.
         if(this.#porcentajeRSH <= 60){
             return "Gratuidad";
-        } else if(this.#porcentajeRSH > 60 && this.#porcentajeRSH <= 70){
+        } else if(this.#porcentajeRSH <= 70){
             return "Beca Bicentenario";
         } else {
             return "Crédito CAE"
@@ -27,9 +27,24 @@ const catalogoCarreras = [
     { nombre: "Derecho", arancel: 4000000, admiteGratuidad: true }
 ];
 
-// Variables utilizadas para crear al postulante.
-let nombre = prompt('Ingrese el nombre: ');
-let porcentaje = parseInt(prompt('Ingrese el porcentaje: '));
+//SE AGREGA BUCLE PARA VALIDAR INGRESO DE DATOS
+let nombre = "";
+let porcentaje = 0;
+let validacion = false;
+
+do{
+    // Variables utilizadas para crear al postulante.
+    nombre = prompt('Ingrese el nombre: ');
+    porcentaje = parseInt(prompt('Ingrese el porcentaje (0 a 100): '));
+    if(!isNaN(porcentaje) && porcentaje >= 0 && porcentaje <= 100){
+        // Si TODO esta correcto, se sale del bucle
+        validacion = true;
+    } else {
+        // Si hay un error, se envia un alerta con el error y se solicita reingreso.
+        alert("Datos invalidos. El porcentaje debe ser un numero entre 0 y 100")
+        validacion = false;
+    }
+}while(validacion === false);
 
 //Creación del postulante 1
 const postulante1 = new Postulante(nombre, porcentaje);
@@ -58,15 +73,21 @@ const costoTotalArancel = catalogoCarreras.reduce((total, carrera) => {
 const { nombre: nombrePostulante1} = postulante1;
 
 //SALIDA AL USUARIO. Decidí usar un if else para separar el beneficio de gratuidad con los demás ya que cambian la totalidad de las carreras a optar.
+const beneficio = postulante1.evaluarBeneficio();
+
 if(postulante1.evaluarBeneficio() === "Gratuidad"){
     window.alert(`
-Buenas noches estimado ${nombrePostulante1}, el beneficio al cual usted puede optar es ${postulante1.evaluarBeneficio()}.
+Buenas noches estimado ${nombrePostulante1}, el beneficio al cual usted puede optar es ${beneficio}.
 Las carreras a las que puede ingresar con este beneficio son: ${nombreCarrerasGratuidad}.
+
+***Presupuesto universitario: $${costoTotalArancel}***
 `)
 } else {
     window.alert(`
-Buenas noches estimado ${nombrePostulante1}, el beneficio al cual usted puede optar es ${postulante1.evaluarBeneficio()}.
+Buenas noches estimado ${nombrePostulante1}, el beneficio al cual usted puede optar es ${beneficio}.
 Las carreras a las que puede ingresar son: ${nombreCarreras}.
+
+***Presupuesto universitario: $${costoTotalArancel}***
 `);
 }
 
